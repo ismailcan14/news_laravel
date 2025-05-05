@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\User;
+use App\Models\Image;
 
 class TestController extends Controller
 {
@@ -25,8 +26,10 @@ class TestController extends Controller
             'user_id'=>$user->id,
             'category_id'=>$category_modeli->id
         ]);*/
-        $haber=News::find(1)->delete();
-        dd($haber);
+       $user=User::find(9);
+       $news=$user->news()->first();
+       $images=$news->images()->first();
+        dd($images->image->name);
     }
     public function create_user():User
     {
