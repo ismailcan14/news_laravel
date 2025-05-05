@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TestController;
 use App\Http\Controllers\UserController;
+use App\Http\Middleware\VerifyCsrfToken;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,9 +22,11 @@ Route::get('/', function () {
 
 Route::get('test',[TestController::class, 'test_methodu']);
 
-Route::prefix('user')->group(function() {
+Route::prefix('user')->withoutMiddleware(VerifyCsrfToken::class)
+->group(function() {
     Route::post('create',[UserController::class,'create_user']);
     Route::post('login',[UserController::class,'login']);
+    Route::get('get',[UserController::class,'get_user']);
     Route::post('logout',[UserController::class,'logout']);
     /*user adında bir route grubu oluşturur. Yani URL'nin başında /api/user olur.
 Bu grup içinde create endpoint'ine gelen POST isteğini UserController içindeki create_user fonksiyonuna yönlendirir. */

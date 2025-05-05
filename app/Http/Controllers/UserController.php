@@ -34,6 +34,24 @@ Veriler geçerli mi diye kontrol eder ($request->validate([...])).
 Kullanıcıyı veritabanına kaydeder (User::create([...])).
 Oluşturulan kullanıcıyı JSON formatında döner (response()->json([...])). */
 
+
+public function get_user()
+{
+    $user = Auth::user();
+    if (!$user) {
+        return response()->json([
+            'status' => false,
+            'message' => 'Kullanıcı bulunamadı.'
+        ]);
+    }
+    return response()->json([
+        'status' => true,
+        'message' => 'Kullanıcı bilgileri başarıyla getirildi.',
+        'data' => $user
+    ]);
+}
+
+
 public function login(UserLoginRequest $request )
    {
   $user=Auth::attempt([
@@ -60,17 +78,7 @@ public function login(UserLoginRequest $request )
 
 public function logout(UserLoginRequest $request)
 {
-    $user=Auth::attempt([
-        'email'=>$request->email,
-        'password'=>$request->password
-      ]);
-      if(!$user)
-      {
-        return response()->json([
-            'status'=>false,
-            'message'=>'kullanıcı bulunamadı'
-        ]);
-      }
+   
 
     Auth::logout();
     return response()->json([

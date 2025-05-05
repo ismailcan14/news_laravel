@@ -6,16 +6,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Category extends Model
+class MainCategories extends Model
 {
     use HasFactory, SoftDeletes;
-
-    protected $table = 'categories';
-
+    protected $table = 'main_categories';
     protected $fillable = [
         'name',
-        'main_categories_id',
         'image_id',
-        'slug',
+        'slug'
     ];
 }
